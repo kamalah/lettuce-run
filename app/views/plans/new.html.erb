@@ -1,0 +1,46 @@
+<div class="container">
+	<h1> Welcome to Lettuce Run </h1>
+	<div class="row">
+	<div class="col-md-4">
+	<%= form_tag("/plans", method: "post") do%>
+		<div class="form-group">
+			<label for="running-status">1. How Much do You Run?</label><br>
+			<label class="radio-inline"><input type="radio" name="status" value="0">None</label>
+			<label class="radio-inline"><input type="radio" name="status" value="1">< 10 miles/week</label>
+			<label class="radio-inline"><input type="radio" name="status" value="2">10-20 miles/week</label>
+			<label class="radio-inline"><input type="radio" name="status" value="3"> >20 miles/week</label>
+		</div>
+		<div class="form-group">
+			<label for="race-date">2. When is Your Race?</label>
+			<input type="date" class="form-control" name ="date" id="date">
+		</div>
+		<div class="form-group">
+			<label for="race-distance">3. How Long is Your Race?</label> <br>
+			<label class="radio-inline"><input type="radio" name="distance"= value="0">10k</label>
+			<label class="radio-inline"><input type="radio" name="distance" value="1"> Half Marathon</label>
+			<label class="radio-inline"><input type="radio" name="distance" value="2">Full Marathon</label>
+		</div>
+		<div class="form-group">
+			<label class="inline" for="target">4. What is Your Target Time( hh:mm)?</label>
+			<div class = "row">
+			<div class="col-md-3">
+			<input type="number" class="form-control" name="hours" id="hours" step="1" min="0" max="12"> 
+			</div>
+			<div class="col-md-3 text-center">:	</div>
+			<div class="col-md-3">
+			<input type="number" class="form-control" name="minutes" id="minutes" step="1" min="0" max="59">
+			</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="cross-training">5. Cross Training Activities</label><br>
+			<label class="checkbox-inline"><input type="checkbox" name="activity" value="cicling">Cicling</label>
+			<label class="checkbox-inline"><input type="checkbox" name="activity" value="swim"> Swim</label>
+			<label class="checkbox-inline"><input type="checkbox" name="activity" value="elliptical">Elliptical</label>
+		</div>
+		<input data-hook="make-plan" type="submit" name="commit" class="btn btn-primary" value ="Show My Plan!">
+	<%end %>
+	</div>
+	</div>
+</div>
+
