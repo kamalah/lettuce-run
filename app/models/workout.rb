@@ -11,7 +11,6 @@ class Workout < ActiveRecord::Base
 		weeks_workout.each do |workout|
 			total_distance[workout.activity] += workout.distance
 		end
-
 		total_distance
 	end
 end

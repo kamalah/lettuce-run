@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   get 'calendar/show' => 'calendar#show'
 
   root 'plans#new'
-  resources :plans
+  resources :plans do
+    resources :workouts
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
