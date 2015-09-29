@@ -1,6 +1,11 @@
 <div class="container">
   <h1> Your New Training Plan </h1>
+  <a href="javascript:void(0)" id="show-hide"> Hide Training Plan </a>
+  <div class="plan-summary">
+    <ul>
+    </ul>
+  </div>
   <div class="row">
-    <%= render "calendar", locals: {date: @date, workouts: @workouts, workout_summary: @workout_summary} %>
+    <%= render partial:"calendar", locals: {date: @date, workouts: @workouts, weekly_summaries: @weekly_summaries} %>
   </div>
 </div>

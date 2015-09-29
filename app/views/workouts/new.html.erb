@@ -1,14 +1,15 @@
 <div class="container">
+	<h1> Enter Your New Workout </h1>
 	<div class="input-form">
 		<%= form_for [@plan, @workout] do |f| %>
 		<%= f.label :date %>
 		<%= f.datetime_select :date,class: 'form-control'%> <br> <br>
 		<%= f.label :activity %>
 		<%= f.select(:activity, @plan.activities.split(',')) %> <br>
-		<%= f.label :duration %>
-		<%= number_field :duration_hours, class: 'form-control' %>
-		<%= number_field :duration_min, class: 'form-control' %><br>
-		<%= f.label :distance %>
+		<%= f.label "Duration (hh:mm)" %>
+		<%= number_field :duration, :hours %> :
+		<%= number_field :duration, :mins %><br>
+		<%= f.label "Distance (miles)" %>
 		<%= f.number_field :distance %> <br>
 		<%= f.submit "Save" %>
 		<% end %>

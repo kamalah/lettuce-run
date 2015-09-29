@@ -7,9 +7,13 @@ class Workout < ActiveRecord::Base
 	def self.weekly_summary(day_seven)
 		day_one = day_seven - 6
 		weeks_workout = self.where("(date >= ?) AND (date <= ?)",day_one, day_seven)
-		total_distance = {'Run'=> 0}
+		total_distance={}
 		weeks_workout.each do |workout|
-			total_distance[workout.activity] += workout.distance
+			if total_distance[workout.activity]
+				total_distance[workout.activity] += workout.distance
+			else
+				total_distance[workout.activity] = workout.distance
+			end
 		end
 		total_distance
 	end

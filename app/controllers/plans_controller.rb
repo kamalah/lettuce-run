@@ -20,12 +20,24 @@ class PlansController < ApplicationController
 		status = params[:status]
 		distance = distance_map[params[:distance]]
 		target_time = params[hours]*60 + params[:minutes]
-		activity = params[:activity]
+		activity = ['Run',params[:activity1],params[:activity2],params[:activity3]].reject(&:blank?).join(',')
 		plan = Plan.new(version: 0, target_time: target_time, race_date: race_date, 
-			start_date: Date.today)
+			start_date: Date.today, distance: distance, activities: activities)
 		plan.save
-		#go from start date to race date
-		training_dates = (plan.start_date..race_date).to_a	
+		
+		case params[:distance]
+		when 0
+			tenkPlan(plan)
+		when 1
+			halfPlan(plan)
+		when 2
+			fullPlan(plan)
+		end
+			
+		
+	end
+
+	def tenkPlan(plan)
 		# 10k plan
 		# rest_day M-W-S (wday = 0, 2, 5)
 		# cross-train F (wday = 4) 
@@ -33,10 +45,11 @@ class PlansController < ApplicationController
 		# week 3,4: 4 miles 2x week (wday = 1, 3), 5 miles wday= 6
 		# week 5,6: 5 miles 2x week (wday = 1, 3), 6 miles wday= 6
 		# week 7,8: 5 miles 2x week (wday = 1, 3), 6.5 miles wday= 6
+		training_dates = (plan.start_date..plan.race_date).to_a
 		thirds = (plan.race_date - plan.start_date)/3
 		first_third = plan.start_date + thirds
 		middle_third = first_third+thirds
-		target_pace = target_time/distance
+		target_pace = plan.target_time/plan.distance
 		training_dates.each do |date|
 			if date < first_third
 				distance_scale = 0.5
@@ -57,6 +70,12 @@ class PlansController < ApplicationController
 					plan.workouts.create(date: date, distance: (distance*distance_scale*1.5), duration: (distance*distance_scale*1.5)*target_pace*pace_scale[1])
 			end
 		end	
+	end
+
+	def halfPlan(plan)
+	end
+
+	def fullPlan(plan)
 	end
 end
 
