@@ -1,5 +1,13 @@
 class Plan < ActiveRecord::Base
+	validates_presence_of :start_date, :race_date, :distance, :target_time
+	validate :race_date_after_start_date
 	has_many :workouts
+	
+	def race_date_after_start_date
+		 if race_date <= start_date
+	      errors.add(:start_date, "must be before race date")
+	    end
+	end
 	
 	def weekly_summaries
 		sundays = start_date.sunday? ? start_date : (start_date + 7- start_date.wday)
