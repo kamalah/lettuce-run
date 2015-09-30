@@ -17,4 +17,9 @@ class Workout < ActiveRecord::Base
 		end
 		total_distance
 	end
+
+	def convert_to_run
+		
+
+	end
 end

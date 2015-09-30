@@ -13,7 +13,7 @@ class WorkoutsController < ApplicationController
 		def workout_params
 			form_params= params.require(:workout).permit(:distance, 
 				:date, :activity)
-			form_params[:duration] = params[:duration][:hours]* 60 + params[:duration][:hours] 
+			form_params[:duration] = params[:duration][:hours].to_i* 60 + params[:duration][:mins].to_i 
 			form_params
 		end
 

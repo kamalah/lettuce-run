@@ -1,10 +1,10 @@
 <div class="col-md-12 text-center">
       <div class="well controls">
-        <%= link_to plan_path({date: date - 1.month, id: 1}), class: "btn btn-default" do %>
+        <%= link_to plan_path({date: date - 1.month, id: params[:id]}), class: "btn btn-default" do %>
         <i class="glyphicon glyphicon-backward"></i>
         <% end %>
         <%= "#{date.strftime("%B")} #{date.year}" %>
-        <%= link_to plan_path({date: date + 1.month, id: 1}), class: "btn btn-default" do %>
+        <%= link_to plan_path({date: date + 1.month, id: params[:id]}), class: "btn btn-default" do %>
         <i class="glyphicon glyphicon-forward"></i>
         <% end %>
       </div>
@@ -23,7 +23,7 @@
       <% if workouts[cal_date] %>
       <ul>
         <% workouts[cal_date].each do |workout| %>
-        <li><%= workout.activity %> - <%= workout.distance %> </li>
+        <li><%= workout.activity %> - <%= workout.distance %> - <%= workout.duration.round(1) %> </li>
        <% end %>
       </ul>
       <% end %>
