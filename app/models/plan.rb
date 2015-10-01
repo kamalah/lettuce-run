@@ -38,31 +38,31 @@ class Plan < ActiveRecord::Base
 	def analyze
 		training_plan = workouts.where(planned: true).group_by(&:date_only)
 		actual_workouts = workouts.where(planned: false).group_by(&:date_only)
-		training_to_date = (start_date..Date.today).to_a 
+		
+		#training_to_date = (start_date..Date.today).to_a 
+		training_to_date = (start_date..(Date.today+30)).to_a
 		#metrics
-		#actual_compliance - did actual workout on day scheduled
+		#compliance[0] - did actual workout on day scheduled
 		#completed actual mileage for the week
 		compliance = Array.new(3,0)
-
+		training_days = training_to_date.length
 		training_to_date.each do |date|
+			
 			if training_plan[date] 
-				if actual_workouts[date] 
-					if (actual_workouts[date].activity == 'Run') #three points
-						compliance[0] += 1 + (actual_workouts[date].distance/training_plan[date].distance) + (actual_workouts[date].duration/training_plan[date].duration)
-					else
-					 	case actual_workouts[date].activity
-						 	when 'Bike'
-								
-							when 'Swim'
-								
-							when 'Elliptical'
-							
-						end
+				if actual_workouts[date]
+					actual_workouts[date].each do |workout|
+					if (workout.activity == 'Run') 
+						compliance[0] += 0.5 #bonus for running on running day
+					end	
+					converted = workout.convert_to_run
+					compliance[0] += (converted[:distance]/training_plan[date][0].distance) + (converted[:duration]/training_plan[date][0].duration)
 					end
-				elsif actual_workouts[date]
-				end
+				end	
+			elsif actual_workouts[date]
+				
 			end
 		end
+		puts compliance
 		95
 	end
 end

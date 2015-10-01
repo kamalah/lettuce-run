@@ -18,8 +18,16 @@ class Workout < ActiveRecord::Base
 		total_distance
 	end
 
+	def duration_pretty
+		hours = (duration/60).floor
+		minutes = (duration - hours*60).floor
+		seconds = ((duration - hours*60)-minutes).round(2)
+		"#{hours}:#{minutes}:#{seconds}"
+	end
+
 	def convert_to_run
-		
+		workout_scales = {'Run'=> [1,1], 'Bike'=> [0.8, 0.8], 'Swim'=> [1, 0.25], 'Elliptical'=> [0.67, 1]}
+		{distance: (workout_scales[activity][0]*distance), duration: (workout_scales[activity][1]*duration) }
 
 	end
 end

@@ -1,7 +1,9 @@
 class WorkoutsController < ApplicationController
 	def new
+		workout_date = Date.parse(params[:date])
 		@plan = Plan.find_by(id: params[:plan_id])
-		@workout = Workout.new(date: Date.parse(params[:date]))
+		@planned_workout = @plan.workouts.where("(planned = ?) AND (date = ?) ", true, workout_date)
+		@workout = Workout.new(date: workout_date)
 	end
 
 	def create

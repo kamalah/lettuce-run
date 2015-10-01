@@ -1,5 +1,16 @@
 <div class="container">
-	<h1> Enter Your New Workout </h1>
-	<%= render partial:"form", locals: {plan: @plan, workout: @workout} %>
-	
+	<div class = "row">
+		<div class = "col-md-6">
+			<h1> Enter Your New Workout </h1>
+			<%= render partial:"form", locals: {plan: @plan, workout: @workout} %>
+		</div>	
+		<div class = "col-md-6">
+		<% if @planned_workout.length > 0 %>
+			<h2> Planned Workout Details</h2>
+			<h3> Activity:  <%= @planned_workout[0].activity %> </h3>
+			<h3> Duration: <%= @planned_workout[0].duration_pretty %></h3>
+			<h3> Distance (miles): <%= @planned_workout[0].distance %></h3>
+		<% end %> 
+		</div>
+	</div>
 </div>
