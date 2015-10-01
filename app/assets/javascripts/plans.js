@@ -42,7 +42,7 @@ function check_values (form_values) {
             $('#submit').removeAttr('disabled');
             var reasonable = check_values(form_values)
             if (reasonable) 
-            	$('#submit').attr('data-confirm','Are you sure the following are correct: ' + reasonable);
+				$('#submit').attr('data-confirm','Are you sure the following are correct: ' + reasonable);
             else
             	$('#submit').removeAttr('data-confirm')
         }

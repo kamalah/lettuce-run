@@ -1,6 +1,7 @@
 <div class="container">
   <h1> Your New Training Plan </h1>
-  <a href="javascript:void(0)" id="show-hide"> Hide Training Plan </a>
+  <%= button_to "Update Plan!", plan_path(params[:id]), method: :patch%>
+  <a href="javascript:void(0)" id="show-hide"> Hide Previous Versions</a>
   <div class="plan-summary">
     <ul>
     </ul>

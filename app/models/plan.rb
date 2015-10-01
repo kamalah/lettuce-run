@@ -1,6 +1,6 @@
 class Plan < ActiveRecord::Base
 	validates_presence_of :start_date, :race_date, :distance, :target_time
-	validate :race_date_after_start_date
+	validate :race_date_after_start_date, :dates_in_future, :target_time_reasonable
 	has_many :workouts
 	
 	def race_date_after_start_date
@@ -9,6 +9,22 @@ class Plan < ActiveRecord::Base
 	    end
 	end
 	
+	def dates_in_future
+		 if (race_date < Date.today)
+		 	errors.add(:race_date, "must be in the future: race date")
+		 end
+
+		 if (start_date < Date.today)
+	      errors.add(:start_date, "must be in the future: start date")
+	    end
+	end
+
+	def target_time_reasonable
+		if ((target_time / distance) < 5)
+			errors.add(:target_time, "your target time is not reasonable")
+		end	
+	end
+
 	def weekly_summaries
 		sundays = start_date.sunday? ? start_date : (start_date + 7- start_date.wday)
 		weekly_summary = {}
