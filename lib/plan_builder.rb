@@ -31,6 +31,10 @@ private
 	    	end
 		end
 
+		def update_plan(plan)
+		
+		end
+
 		def tenkPlan(plan)
 			# 10k plan
 			# rest_day M-W-S (wday = 1, 3, 6)

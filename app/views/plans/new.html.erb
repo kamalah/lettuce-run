@@ -2,7 +2,7 @@
 	<h1> Welcome to Lettuce Run </h1>
 	<div class="row">
 	<div class="col-md-4">
-	<%= form_tag("/plans", method: "post") do%>
+	<%= form_tag("/plans", method: "post", id: "plan-form") do%>
 		<div class="form-group">
 			<label for="running-status">1. How Much do You Run?</label><br>
 			<label class="radio-inline"><input type="radio" name="status" value="0">None</label>

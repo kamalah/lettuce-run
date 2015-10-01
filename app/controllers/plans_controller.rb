@@ -5,7 +5,6 @@ class PlansController < ApplicationController
 
 	def create
 		build_plan
-		
 	end
 
 	def show
@@ -26,7 +25,6 @@ class PlansController < ApplicationController
   		plan = Plan.last
   		redirect_to plan_path(plan)
   	end
-
   	
 end
 

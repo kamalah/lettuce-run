@@ -27,9 +27,9 @@ function check_values (form_values) {
 }
 
 (function () {
-    $('form').change(function() {
+    $('#plan-form').change(function() {
         var empty = false;
-        window.form_values = $('form').serializeArray();
+        window.form_values = $('#plan-form').serializeArray();
         form_values.forEach(function(object) {
             if (object.value == '') {
                 empty = true;

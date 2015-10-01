@@ -23,7 +23,12 @@
       <% if workouts[cal_date] %>
       <ul>
         <% workouts[cal_date].each do |workout| %>
-        <li><%= workout.activity %> - <%= workout.distance %> - <%= workout.duration.round(1) %> </li>
+        <% if workout.planned %>
+        <li><%= "#{workout.activity}-#{workout.distance}-#{workout.duration.round(1)}"%> </li>
+        <% else %>
+        <li> <%= link_to("#{workout.activity}-#{workout.distance}-#{workout.duration.round(1)}", edit_plan_workout_path({plan_id: params[:id], id: workout.id})) %> </li>
+        
+        <% end %>
        <% end %>
       </ul>
       <% end %>
