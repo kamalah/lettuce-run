@@ -52,5 +52,6 @@ class Plan < ActiveRecord::Base
 				end
 			end
 		end
+		95
 	end
 end
