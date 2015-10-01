@@ -44,32 +44,22 @@ private
 			# week 5,6: 5 miles 2x week (wday = 2, 4), 6 miles wday= 0
 			# week 7,8: 5 miles 2x week (wday = 2, 4), 6.5 miles wday= 0
 			thirds = (plan.race_date - plan.start_date)/3
-			first_third = plan.start_date + thirds
-			middle_third = first_third + thirds
 			target_pace = plan.target_time / plan.distance
 			taper_week = plan.race_date - 6
 			training_dates = (plan.start_date..taper_week).to_a
 			#race_date "workout"
 			plan.workouts.create(date: plan.race_date, distance: (plan.distance), duration: plan.target_time)
+			distance_scale = [[0.5, 0.75], [0.75, 1] ,[0.75, 1.1]]
+			pace_scale = [[1.2, 1.25], [1.1, 1.15], [1, 1.05]]
 
 			training_dates.each do |date|
-				if date < first_third
-					distance_scale = [0.5, 0.75]
-					pace_scale = [1.2, 1.25]
-				elsif date < middle_third
-					distance_scale = [0.75, 1]
-					pace_scale = [1.1, 1.15]
-				else
-					distance_scale = [0.75, 1.1]
-					pace_scale = [1, 1.05]
-				end
-					
+				training_index = (date- plan.start_date)/thirds				
 				if (date.wday == 2 || date.wday == 4)
-						plan.workouts.create(date: date, distance: plan.distance*distance_scale[0], duration: plan.distance*distance_scale[0]*target_pace*pace_scale[0])
+						plan.workouts.create(date: date, distance: plan.distance*distance_scale[training_index][0], duration: plan.distance*distance_scale[training_index][0]*target_pace*pace_scale[training_index][0])
 				elsif (date.wday == 5)
 						plan.workouts.create(activity: "cross-train", date: date, duration: 45)
 				elsif (date.wday == 0)
-						plan.workouts.create(date: date, distance: (plan.distance*distance_scale[1]), duration: (plan.distance*distance_scale[1])*target_pace*pace_scale[1])
+						plan.workouts.create(date: date, distance: (plan.distance*distance_scale[training_index][1]), duration: (plan.distance*distance_scale[training_index][1])*target_pace*pace_scale[training_index][1])
 				end
 			end	
 		end
@@ -80,40 +70,33 @@ private
 			# cross-train F (wday = 5) 
 			# phase 1: establish a base (long runs up to 7 miles)
 			# phase 2: gradually increase long runs up to 10 miles
-			# phase 3: maintain and cap at a long run of 12 milles
+			# phase 3: maintain and cap at a long run of 12 miles
 			# phase 4: taper
 
-			fourths = (plan.race_date - plan.start_date)/4
-			first_quarter = plan.start_date + fourths
-			second_quarter = first_quarter + fourths
-			third_quarter = second_quarter + fourths
+			fourths = (plan.race_date - plan.start_date) / 4
 			target_pace = plan.target_time / plan.distance
 			taper_week = plan.race_date - 6
 			training_dates = (plan.start_date..taper_week).to_a
 			#race_date "workout"
 			plan.workouts.create(date: plan.race_date, distance: (plan.distance), duration: plan.target_time)
-
+			long_run = [7, 10, 12, 10]
+			distance_scale = [[0.5, 0.75],
+								[0.75, 1],
+								[0.75, 1.1],
+							[0.75, 1.1]]
+			pace_scale =	[[1.2, 1.25],
+							[1.1, 1.15],
+							[1, 1.05],
+							[1, 1.05]]
+			 				
 			training_dates.each do |date|
-				if date < first_quarter
-					distance_scale = [0.5, 0.75]
-					pace_scale = [1.2, 1.25]
-				elsif date < second_quarter
-					distance_scale = [0.75, 1]
-					pace_scale = [1.1, 1.15]
-				elsif  date < third_quarter
-					distance_scale = [0.75, 1.1]
-					pace_scale = [1, 1.05]
-				else
-					distance_scale = [0.75, 1.1]
-					pace_scale = [1, 1.05]
-				end
-					
+				training_index = (date- plan.start_date)/fourths
 				if (date.wday == 2 || date.wday == 4)
-						plan.workouts.create(date: date, distance: plan.distance*distance_scale[0], duration: plan.distance*distance_scale[0]*target_pace*pace_scale[0])
+						plan.workouts.create(date: date, distance: long_run[training_index]*distance_scale[training_index][0], duration: long_run[training_index]*distance_scale[training_index][0]*target_pace*pace_scale[training_index][0])
 				elsif (date.wday == 5)
 						plan.workouts.create(activity: "cross-train", date: date, duration: 45)
 				elsif (date.wday == 0)
-						plan.workouts.create(date: date, distance: (plan.distance*distance_scale[1]), duration: (plan.distance*distance_scale[1])*target_pace*pace_scale[1])
+						plan.workouts.create(date: date, distance: (long_run[training_index]*distance_scale[training_index][1]), duration: (long_run[training_index]*distance_scale[training_index][1])*target_pace*pace_scale[training_index][1])
 				end
 			end	
 
@@ -127,6 +110,31 @@ private
 			# phase 2: gradually increase long runs up to 18 miles
 			# phase 3: maintain and cap at a long run of 24 milles
 			# phase 4: taper
+			fourths = (plan.race_date - plan.start_date)/4
+			target_pace = plan.target_time / plan.distance
+			taper_week = plan.race_date - 6
+			training_dates = (plan.start_date..taper_week).to_a
+			#race_date "workout"
+			plan.workouts.create(date: plan.race_date, distance: (plan.distance), duration: plan.target_time)
+			long_run = [10, 18, 24, 16]
+			distance_scale = [[0.5, 0.75],
+								[0.75, 1],
+								[0.75, 1.1],
+							[0.75, 1.1]]
+			pace_scale =	[[1.2, 1.25],
+							[1.1, 1.15],
+							[1, 1.05],
+							[1, 1.05]]
+			 				
+			training_dates.each do |date|
+				training_index = (date- plan.start_date)/fourths
+				if (date.wday == 2 || date.wday == 4)
+						plan.workouts.create(date: date, distance: long_run[training_index]*distance_scale[training_index][0], duration: long_run[training_index]*distance_scale[training_index][0]*target_pace*pace_scale[training_index][0])
+				elsif (date.wday == 5)
+						plan.workouts.create(activity: "cross-train", date: date, duration: 45)
+				elsif (date.wday == 0)
+						plan.workouts.create(date: date, distance: (long_run[training_index]*distance_scale[training_index][1]), duration: (long_run[training_index]*distance_scale[training_index][1])*target_pace*pace_scale[training_index][1])
+				end
+			end	
 		end
-
 end

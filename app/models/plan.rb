@@ -42,22 +42,22 @@ class Plan < ActiveRecord::Base
 		#metrics
 		#actual_compliance - did actual workout on day scheduled
 		#completed actual mileage for the week
-		compliance = 0
+		compliance = Array.new(3,0)
 
 		training_to_date.each do |date|
 			if training_plan[date] 
 				if actual_workouts[date] 
 					if (actual_workouts[date].activity == 'Run') #three points
-						compliance = 1 + (actual_workouts[date].distance/training_plan[date].distance) + (actual_workouts[date].duration/training_plan[date].duration)
-					# else
-					# 	case actual_workouts[date].activity
-					# 	when 
+						compliance[0] += 1 + (actual_workouts[date].distance/training_plan[date].distance) + (actual_workouts[date].duration/training_plan[date].duration)
+					else
+					 	case actual_workouts[date].activity
+						 	when 'Bike'
+								
+							when 'Swim'
+								
+							when 'Elliptical'
 							
-					# 	when 
-							
-					# 	else
-							
-					# 	end
+						end
 					end
 				elsif actual_workouts[date]
 				end
