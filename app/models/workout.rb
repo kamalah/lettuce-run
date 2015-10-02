@@ -1,5 +1,7 @@
 class Workout < ActiveRecord::Base
+	validates_presence_of :duration, :distance, :activity
 	belongs_to :plan
+
 	def date_only
 		date.to_date
 	end
@@ -22,7 +24,7 @@ class Workout < ActiveRecord::Base
 		hours = (duration/60).floor
 		minutes = (duration - hours*60).floor
 		seconds = ((duration - hours*60)-minutes).round(2)
-		"#{hours}:#{minutes}:#{seconds}"
+		[hours,minutes, seconds]
 	end
 
 	def convert_to_run

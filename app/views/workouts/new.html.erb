@@ -5,10 +5,10 @@
 			<%= render partial:"form", locals: {plan: @plan, workout: @workout} %>
 		</div>	
 		<div class = "col-md-6">
-		<% if @planned_workout.length > 0 %>
+		<% if (!@planned_workout.empty?) %>
 			<h2> Planned Workout Details</h2>
 			<h3> Activity:  <%= @planned_workout[0].activity %> </h3>
-			<h3> Duration: <%= @planned_workout[0].duration_pretty %></h3>
+			<h3> Duration: <%= @planned_workout[0].duration_pretty.join(':') %></h3>
 			<h3> Distance (miles): <%= @planned_workout[0].distance %></h3>
 		<% end %> 
 		</div>

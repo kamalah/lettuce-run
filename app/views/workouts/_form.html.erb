@@ -5,9 +5,9 @@
 		<%= f.label :activity %>
 		<%= f.select(:activity, plan.activities.split(',')) %> <br>
 		<%= f.label "Duration (hh:mm:ss)" %>
-		<%= number_field :duration, :hours, min: 0  %> :
-		<%= number_field :duration, :mins, in: 0..59%>:
-		<%= number_field :duration, :secs, in: 0..59%><br>
+		<%= number_field :duration, :hours, min: 0, placeholder: "#{workout.duration_pretty[0]}"%> :
+		<%= number_field :duration, :mins, in: 0..59, placeholder: "#{workout.duration_pretty[1]}"%>:
+		<%= number_field :duration, :secs, in: 0..59, placeholder: "#{workout.duration_pretty[2]}"%><br>
 		<%= f.label "Distance (miles)" %>
 		<%= f.number_field :distance, step: 0.1, min: 0 %> <br>
 		<%= f.submit "Save" %>

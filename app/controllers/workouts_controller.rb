@@ -3,7 +3,7 @@ class WorkoutsController < ApplicationController
 		workout_date = Date.parse(params[:date])
 		@plan = Plan.find_by(id: params[:plan_id])
 		@planned_workout = @plan.workouts.where("(planned = ?) AND (date = ?) ", true, workout_date)
-		@workout = Workout.new(date: workout_date)
+		@workout = Workout.new(date: workout_date, duration: 0)
 	end
 
 	def create
@@ -11,10 +11,11 @@ class WorkoutsController < ApplicationController
 		@workout = @plan.workouts.new(workout_params.merge({planned: false}))
 		if @workout.save
 			flash[:notice] = "Your workout was successfully added."
-			redirect_to plan_path(@plan)
+			redirect_to plan_path({id: @plan.id, date: @workout.date})
 		else
 			flash[:alert] = @workout.errors.messages
 	      	flash[:color]= "invalid"
+	      	@planned_workout = @plan.workouts.where("(planned = ?) AND (date = ?) ", true, @workout.date)
 	      	render :new
 	    end
 	end
@@ -29,11 +30,11 @@ class WorkoutsController < ApplicationController
 		@workout = Workout.find_by(id: params[:id])
 		if @workout.update(workout_params)
 			flash[:notice] = "Workout Edited Succesfully!"
-			redirect_to plan_path(@plan)
+			redirect_to plan_path({id: @plan.id, date: @workout.date})
 		else
 			flash[:alert] = @workout.errors.messages
 	      	flash[:color]= "invalid"
-			render :edit
+			render :new
 		end
 	end
 

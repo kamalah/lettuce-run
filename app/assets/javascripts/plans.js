@@ -30,12 +30,10 @@ $('#submit').on('click', function(){
 	 var reasonable = check_values(form_values);
             if (reasonable) {
             	if (confirm('Are you sure the following are correct: ' + reasonable)) {
-            		console.log("I am here")
-            		$('#plan-form').submit();
+            	$('#plan-form').submit();
             	}
 			} else {
-				console.log("I am in the else.")
-            	$('#plan-form').submit();
+				$('#plan-form').submit();
 			}
 });
 

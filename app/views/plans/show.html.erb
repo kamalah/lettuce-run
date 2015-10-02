@@ -7,8 +7,9 @@
     <% else %>
       <%= button_to "Make Active!", active_plan_path(@plan), class: "btn" %>
     <% end %>
-  </div>
 
+  </div>
+  <h2> Score: <%=@plan.analyze %> </h2>
   <div class="row">
     <a href="javascript:void(0)" id="show-hide"> Show All Versions</a>
     <div class="plan-summary" hidden="true">
