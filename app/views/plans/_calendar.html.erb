@@ -14,9 +14,19 @@
     <div class="col-md-12">
       <%= calendar date do |cal_date| %>
       <% if cal_date.class == Hash %>
-        <% if weekly_summaries[cal_date[:sum]] %>
-      <p> Run - <%=weekly_summaries[cal_date[:sum]]['Run'] %></p>
-        <% end %>
+        <% if cal_date.keys[0] == :plan %>
+        <% if @planned_summaries[cal_date[:plan]] %>
+            <% @planned_summaries[cal_date[:plan]].each do |summary| %>
+              <p> <%= summary[0]%> - <%= summary[1] %></p>
+            <% end %>
+          <% end %>
+        <% else %>
+        <% if @actual_summaries[cal_date[:act]] %>
+            <% @actual_summaries[cal_date[:act]].each do |summary| %>
+              <p> <%= summary[0]%> - <%= summary[1] %></p>
+            <% end %>
+          <% end %>
+      <% end %>
       <% else %>
       <%= link_to(cal_date.day,new_plan_workout_path({plan_id: params[:id], date: cal_date})) %>
       <% end %>
@@ -24,9 +34,9 @@
       <ul>
         <% workouts[cal_date].each do |workout| %>
         <% if workout.planned %>
-        <li><%= "#{workout.activity}-#{workout.distance}-#{workout.duration.round(1)}"%> </li>
+        <li><%= "#{workout.activity}-#{workout.distance}"%> </li>
         <% else %>
-        <li> <%= link_to("#{workout.activity}-#{workout.distance}-#{workout.duration.round(1)}", edit_plan_workout_path({plan_id: params[:id], id: workout.id})) %> </li>
+        <li> <%= link_to("#{workout.activity}-#{workout.distance}", edit_plan_workout_path({plan_id: params[:id], id: workout.id})) %> </li>
         
         <% end %>
        <% end %>

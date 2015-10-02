@@ -1,11 +1,25 @@
 <div class="container">
   <h1> Your New Training Plan </h1>
-  <%= button_to "Update Plan!", plan_path(params[:id]), method: :patch%>
-  <a href="javascript:void(0)" id="show-hide"> Hide Previous Versions</a>
-  <div class="plan-summary">
-    <ul>
-    </ul>
+  
+  <div class="row">
+    <%if (@plan.active) %>
+      <%= button_to "Update Plan!", plan_path(@plan), method: :patch, class: "btn"%>
+    <% else %>
+      <%= button_to "Make Active!", active_plan_path(@plan), class: "btn" %>
+    <% end %>
   </div>
+
+  <div class="row">
+    <a href="javascript:void(0)" id="show-hide"> Show All Versions</a>
+    <div class="plan-summary" hidden="true">
+      <ul>
+        <%@all_plans.each do |plan| %>
+        <li> <%= link_to("#{plan.version}", plan_path(plan.id)) %> </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  
   <div class="row">
     <%= render partial:"calendar", locals: {date: @date, workouts: @workouts, weekly_summaries: @weekly_summaries} %>
   </div>

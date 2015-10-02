@@ -14,9 +14,9 @@ class Plan < ActiveRecord::Base
 		 	errors.add(:race_date, "must be in the future: race date")
 		 end
 
-		 if (start_date < Date.today)
-	      errors.add(:start_date, "must be in the future: start date")
-	    end
+		 # if (start_date < Date.today)
+	  #     errors.add(:start_date, "must be in the future: start date")
+	  #   end
 	end
 
 	def target_time_reasonable
@@ -25,11 +25,11 @@ class Plan < ActiveRecord::Base
 		end	
 	end
 
-	def weekly_summaries
+	def weekly_summaries(planned)
 		sundays = start_date.sunday? ? start_date : (start_date + 7- start_date.wday)
 		weekly_summary = {}
 		while sundays <= (race_date+6)
-			weekly_summary[sundays.to_date] = workouts.weekly_summary(sundays)
+			weekly_summary[sundays.to_date] = workouts.where(planned: planned).weekly_summary(sundays)
 			sundays += 7
 		end
 		weekly_summary
@@ -63,6 +63,6 @@ class Plan < ActiveRecord::Base
 			end
 		end
 		puts compliance
-		95
+		85
 	end
 end

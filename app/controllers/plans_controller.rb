@@ -1,30 +1,43 @@
 class PlansController < ApplicationController
 	include PlanBuilder
-	def new
+	
+  def new
 	end
 
 	def create
 		build_plan
 	end
 
-	def show
+  def make_active
+    plan = Plan.find_by(id: params[:id])
+    last_active_plan = Plan.where("(master = ?) AND (active = ?)", plan.master, true).first
+    plan.update(active: true)
+    last_active_plan.update(active: false)
+    last_active_plan.workouts.where(planned: false).update_all(plan_id: plan.id)
+    redirect_to plan_path(plan)
+  end
+
+  def show
 		@date = params[:date] ? Date.parse(params[:date]) : Date.today
-		plan = Plan.find_by(id: params[:id])
-		@workouts = plan.workouts.group_by(&:date_only)
-		@weekly_summaries = plan.weekly_summaries
-  	end
+		@plan = Plan.find_by(id: params[:id])
+		@workouts = @plan.workouts.group_by(&:date_only)
+		@planned_summaries = @plan.weekly_summaries(true)
+    @actual_summaries = @plan.weekly_summaries(false)
+    @all_plans = Plan.where(master: @plan.master).order("version DESC")
+  end
 
-  	def update
-  		current_plan = Plan.find_by(id: params[:id]) 
-  		compliance = current_plan.analyze
-  		if compliance > 90 
-  			flash[:notice] = "Your are following your current plan well, no need to update."
-  		else
-  			update_plan(plan)
-  		end
-  		plan = Plan.last
-  		redirect_to plan_path(plan)
+  def update
+  	current_plan = Plan.find_by(id: params[:id]) 
+    compliance = current_plan.analyze
+  	if compliance > 90 
+  		flash[:notice] = "Your are following your current plan well, no need to update."
+  	else
+  		update_plan(current_plan)
+      flash[:notice] = "Here is your new plan!"
   	end
-  	
+  	plan = Plan.last
+  	redirect_to plan_path(plan)
+  end
+
+
 end
-

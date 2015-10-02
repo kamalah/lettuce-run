@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  get 'calendar/show' => 'calendar#show'
-
   root 'plans#new'
+  post 'plans/:id/active' => 'plans#make_active', as: :active_plan
   resources :plans do
     resources :workouts
   end

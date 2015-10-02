@@ -1,5 +1,5 @@
 class Calendar < Struct.new(:view, :date, :callback)
-    HEADER = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday Summary]
+    HEADER = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday Planned Actual]
     START_DAY = :monday
  
     delegate :content_tag, to: :view
@@ -12,14 +12,15 @@ class Calendar < Struct.new(:view, :date, :callback)
  
     def header
       content_tag :tr do
-        HEADER.map { |day| content_tag :th, day }.join.html_safe
+        HEADER.map { |day| content_tag :th, day, class: "col-md-1" }.join.html_safe
       end
     end
  
     def week_rows
       weeks.map do |week|
         content_tag :tr do
-          week<< {sum: week.last}
+          last_day = week.last
+          week << {plan: last_day} << {act: last_day}
           week.map { |day| day_cell(day) }.join.html_safe
         end
       end.join.html_safe

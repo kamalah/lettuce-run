@@ -9,7 +9,10 @@ private
 
 			target_time = params[:hours].to_i*60 + params[:minutes].to_i
 			activities = ['Run',params[:activity1],params[:activity2],params[:activity3]].reject(&:blank?).join(',')
-			plan = Plan.new(version: 0, target_time: target_time, race_date: race_date, 
+		
+			master = Plan.first ? (Plan.order("master DESC").first.master + 1) : 0
+			
+			plan = Plan.new(version: 0, master: master, target_time: target_time, race_date: race_date, 
 				start_date: start_date, distance: distance, activities: activities)
 			
 			plan.save
@@ -31,8 +34,12 @@ private
 	    	end
 		end
 
-		def update_plan(plan)
-		
+		def update_plan(current_plan)
+			new_plan = current_plan.dup
+			new_plan.version = Plan.where(master: current_plan.master).order("version DESC").first.version + 1
+			current_plan.update(active: false)
+			new_plan.save
+			current_plan.workouts.where(planned: false).update_all(plan_id: new_plan.id)
 		end
 
 		def tenkPlan(plan)

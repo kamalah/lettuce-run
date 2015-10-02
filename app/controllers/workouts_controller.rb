@@ -19,7 +19,6 @@ class WorkoutsController < ApplicationController
 	    end
 	end
 
-
 	def edit
 		@plan = Plan.find_by(id: params[:plan_id])
 		@workout = Workout.find_by(id: params[:id])

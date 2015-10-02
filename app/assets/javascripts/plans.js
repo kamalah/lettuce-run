@@ -26,6 +26,29 @@ function check_values (form_values) {
 	return warnings
 }
 
+$('#submit').on('click', function(){
+	 var reasonable = check_values(form_values);
+            if (reasonable) {
+            	if (confirm('Are you sure the following are correct: ' + reasonable)) {
+            		console.log("I am here")
+            		$('#plan-form').submit();
+            	}
+			} else {
+				console.log("I am in the else.")
+            	$('#plan-form').submit();
+			}
+});
+
+$('#show-hide').click(function (){
+		$(".plan-summary").toggle();
+		if ($(".plan-summary").is(":hidden")) {
+			$('#show-hide').text("Show All Versions Plan");
+		} else {
+			$('#show-hide').text("Hide All Versions Plan");
+		}
+});
+
+
 (function () {
     $('#plan-form').change(function() {
         var empty = false;
@@ -40,11 +63,6 @@ function check_values (form_values) {
             $('#submit').attr('disabled', 'disabled'); 
         } else {
             $('#submit').removeAttr('disabled');
-            var reasonable = check_values(form_values)
-            if (reasonable) 
-				$('#submit').attr('data-confirm','Are you sure the following are correct: ' + reasonable);
-            else
-            	$('#submit').removeAttr('data-confirm')
         }
     });
 })()
