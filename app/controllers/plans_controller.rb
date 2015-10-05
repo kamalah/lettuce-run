@@ -38,6 +38,7 @@ class PlansController < ApplicationController
   		flash[:notice] = "Here is your new plan!"
       update_plan(current_plan)
     end
+    redirect_to plan_path(current_plan)
   end
 
 end

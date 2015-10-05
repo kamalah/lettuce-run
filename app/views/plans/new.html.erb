@@ -1,6 +1,14 @@
 <div class="container">
-	<h1> Lettuce Plan! </h1>
+	
 	<div class="row">
+<div class="col-md-6">
+	<div class="plan-form-header">
+		
+		<h1> Lettuce Plan! </h1>
+		</div>
+	</div>
+
+
 	<div class="col-md-4">
 	<%= form_tag("/plans", method: "post", id: "plan-form") do%>
 		<div class="form-group">
@@ -45,6 +53,7 @@
 	<%end %>
 	<button class="btn btn-primary" id= "submit" disabled="true" > Show My Plan! </button>
 	</div>
+	
 	</div>
 </div>
 

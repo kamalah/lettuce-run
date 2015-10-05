@@ -50,6 +50,15 @@ h6 {
     background: image-url("intro-bg.jpg") no-repeat center center;
     background-size: cover;
 }
+.plan-form-header {
+
+     padding-top: 150px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+    padding-bottom: 150px;
+    text-align: center;
+    color: #f8f8f8;
+    background: image-url("heart_shoes.jpg") no-repeat center center;
+    background-size: auto;    
+}
 
 .intro-message {
     position: relative;

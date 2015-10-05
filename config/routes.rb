@@ -1,9 +1,18 @@
 Rails.application.routes.draw do
+  devise_for :users,
+              :controllers =>  {:registrations => "my_devise/registrations", 
+                :sessions => "my_devise/sessions"}, path: "accounts"
+
   root 'plans#index'
   post 'plans/:id/active' => 'plans#make_active', as: :active_plan
-  resources :plans do
-    resources :workouts
+  
+  resources :plans, only: [:new, :create, :show]
+  resources :users,{only: 'show'} do
+       resources :plans do
+        resources :workouts
+      end           
   end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

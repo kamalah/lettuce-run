@@ -2,6 +2,7 @@ class Plan < ActiveRecord::Base
 	validates_presence_of :start_date, :race_date, :distance, :target_time
 	validate :race_date_after_start_date, :dates_in_future, :target_time_reasonable
 	has_many :workouts
+	belongs_to :user
 	
 	def race_date_after_start_date
 		 if race_date <= start_date

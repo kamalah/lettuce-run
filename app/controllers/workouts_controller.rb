@@ -4,9 +4,11 @@ class WorkoutsController < ApplicationController
 		@plan = Plan.find_by(id: params[:plan_id])
 		@planned_workout = @plan.workouts.where("(planned = ?) AND (date = ?) ", true, workout_date)
 		@workout = Workout.new(date: workout_date, duration: 0)
+		@user = current_user
 	end
 
 	def create
+		@user = current_user
 		@plan = Plan.find_by(id: params[:plan_id])
 		@workout = @plan.workouts.new(workout_params.merge({planned: false}))
 		if @workout.save
