@@ -18,14 +18,16 @@ private
 
 			target_time = params[:hours].to_i*60 + params[:minutes].to_i
 			activities = ['Run',params[:activity1],params[:activity2],params[:activity3]].reject(&:blank?).join(',')
-		
+			
 			master = Plan.first ? (Plan.order("master DESC").first.master + 1) : 0
 			
 			plan = Plan.new(version: 0, master: master, target_time: target_time, race_date: race_date, 
 				start_date: start_date, distance: distance, activities: activities)
 			
-			plan.save
-
+			if (user_signed_in?)
+				plan.user_id = current_user.id
+			end
+			
 			if plan.save
 			 	case params[:distance]
 					when '0'

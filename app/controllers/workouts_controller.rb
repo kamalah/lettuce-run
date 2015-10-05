@@ -30,11 +30,13 @@ class WorkoutsController < ApplicationController
 	end
 
 	def edit
+		@user = current_user
 		@plan = Plan.find_by(id: params[:plan_id])
 		@workout = Workout.find_by(id: params[:id])
 	end
 
 	def update
+		@user = current_user
 		@plan = Plan.find_by(id: params[:plan_id])
 		@workout = Workout.find_by(id: params[:id])
 		if @workout.update(workout_params)

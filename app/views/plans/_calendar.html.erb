@@ -40,7 +40,7 @@
         <% if workout.planned %>
         <li><%= "#{workout.activity}-#{workout.distance}"%> </li>
         <% else %>
-        <li> <%= link_to("#{workout.activity}-#{workout.distance}", edit_plan_workout_path({plan_id: params[:id], id: workout.id})) %> </li>
+        <li> <%= link_to("#{workout.activity}-#{workout.distance}", edit_user_plan_workout_path({plan_id: params[:id], id: workout.id, user_id: current_user.id})) %> </li>
         
         <% end %>
        <% end %>
