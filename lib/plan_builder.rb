@@ -19,12 +19,12 @@ private
 
 			if plan.save
 			 	case params[:distance]
-				when '0'
-					tenkPlan(plan)
-				when '1'
-					halfPlan(plan)
-				when '2'
-					fullPlan(plan)
+					when '0'
+						tenkPlan(plan)
+					when '1'
+						halfPlan(plan)
+					when '2'
+						fullPlan(plan)
 				end
 				redirect_to plan_path(plan)
 	        else
@@ -37,9 +37,24 @@ private
 		def update_plan(current_plan)
 			new_plan = current_plan.dup
 			new_plan.version = Plan.where(master: current_plan.master).order("version DESC").first.version + 1
+			new_plan.start_date = Date.today
 			current_plan.update(active: false)
-			new_plan.save
-			current_plan.workouts.where(planned: false).update_all(plan_id: new_plan.id)
+			if new_plan.save
+				current_plan.workouts.where(planned: false).update_all(plan_id: new_plan.id)
+				case new_plan.distance
+					when 6.2
+						tenkPlan(new_plan)
+					when 13.1
+						halfPlan(new_plan)
+					when 26.2
+						fullPlan(new_plan)
+				end
+				redirect_to plan_path(new_plan)
+			else
+				flash[:alert] = plan.errors.messages
+	      		flash[:color]= "invalid"
+	      		redirect_to plan_path(current_plan)
+			end
 		end
 
 		def tenkPlan(plan)

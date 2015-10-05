@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'plans#new'
+  root 'plans#index'
   post 'plans/:id/active' => 'plans#make_active', as: :active_plan
   resources :plans do
     resources :workouts

@@ -1,10 +1,10 @@
 <div class="container">
 	<div class = "row">
-		<div class = "col-md-6">
+		<div class = "col-md-8">
 			<h1> Enter Your New Workout </h1>
 			<%= render partial:"form", locals: {plan: @plan, workout: @workout} %>
 		</div>	
-		<div class = "col-md-6">
+		<div class = "col-md-4">
 		<% if (!@planned_workout.empty?) %>
 			<h2> Planned Workout Details</h2>
 			<h3> Activity:  <%= @planned_workout[0].activity %> </h3>

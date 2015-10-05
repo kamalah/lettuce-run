@@ -3,9 +3,9 @@
   
   <div class="row">
     <%if (@plan.active) %>
-      <%= button_to "Update Plan!", plan_path(@plan), method: :patch, class: "btn"%>
+      <%= button_to "Update Plan!", plan_path(@plan), method: :patch, class: "btn btn-primary"%>
     <% else %>
-      <%= button_to "Make Active!", active_plan_path(@plan), class: "btn" %>
+      <%= button_to "Make Active!", active_plan_path(@plan), class: "btn btn-primary" %>
     <% end %>
 
   </div>

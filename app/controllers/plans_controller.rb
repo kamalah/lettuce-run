@@ -1,13 +1,13 @@
 class PlansController < ApplicationController
 	include PlanBuilder
 	
-  def new
-	end
+  def index
+  end
 
-	def create
-		build_plan
-	end
-
+  def create
+    build_plan
+  end
+  
   def make_active
     plan = Plan.find_by(id: params[:id])
     last_active_plan = Plan.where("(master = ?) AND (active = ?)", plan.master, true).first
@@ -15,6 +15,9 @@ class PlansController < ApplicationController
     last_active_plan.update(active: false)
     last_active_plan.workouts.where(planned: false).update_all(plan_id: plan.id)
     redirect_to plan_path(plan)
+  end
+
+  def new
   end
 
   def show
@@ -32,12 +35,9 @@ class PlansController < ApplicationController
   	if compliance > 90 
   		flash[:notice] = "Your are following your current plan well, no need to update."
   	else
-  		update_plan(current_plan)
-      flash[:notice] = "Here is your new plan!"
-  	end
-  	plan = Plan.last
-  	redirect_to plan_path(plan)
+  		flash[:notice] = "Here is your new plan!"
+      update_plan(current_plan)
+    end
   end
-
 
 end

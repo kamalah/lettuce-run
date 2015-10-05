@@ -20,6 +20,13 @@ class WorkoutsController < ApplicationController
 	    end
 	end
 
+	def destroy
+		workout = Workout.find(params[:id])
+		workout.destroy
+		flash[:notice] = "Workout #{workout.id} succesfully deleted."
+		redirect_to plan_path({id: params[:plan_id], date: workout.date})
+	end
+
 	def edit
 		@plan = Plan.find_by(id: params[:plan_id])
 		@workout = Workout.find_by(id: params[:id])

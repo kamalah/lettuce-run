@@ -10,13 +10,13 @@ class Plan < ActiveRecord::Base
 	end
 	
 	def dates_in_future
-		 if (race_date < Date.today)
+		if (race_date < Date.today)
 		 	errors.add(:race_date, "must be in the future: race date")
-		 end
+		end
 
-		 # if (start_date < Date.today)
-	  #     errors.add(:start_date, "must be in the future: start date")
-	  #   end
+		# if (start_date < Date.today)
+	 #   		errors.add(:start_date, "must be in the future: start date")
+	 #   	end
 	end
 
 	def target_time_reasonable
@@ -47,37 +47,41 @@ class Plan < ActiveRecord::Base
 		training_days = training_to_date.length
 		run_days = workouts.where("(planned = ? ) AND (activity = ?) AND (date < ?)", true, 'Run', last_day).count
 		xtrain_days = workouts.where("(planned = ? ) AND (activity = ?) AND (date < ?)",true, 'cross-train', last_day).count 
-
-		training_to_date.each do |date|
-			if training_plan[date] 
-				if (training_plan[date][0].activity == 'Run') #check run day
-					if actual_workouts[date]
-						actual_workouts[date].each do |workout|
-						if (workout.activity == 'Run') 
-							compliance[0] += 0.5 #bonus for running on running day
-						end	
-						converted = workout.convert_to_run
-						compliance[0] += (converted[:distance]/training_plan[date][0].distance) + (converted[:duration]/training_plan[date][0].duration)
-						end
-					end
-				else #check cross-train day
-					if actual_workouts[date]
-						actual_workouts[date].each do |workout|
+		if (run_days > 0 && xtrain_days > 0) 
+			training_to_date.each do |date|
+				if training_plan[date] 
+					if (training_plan[date][0].activity == 'Run') #check run day
+						if actual_workouts[date]
+							actual_workouts[date].each do |workout|
 							if (workout.activity == 'Run') 
-								compliance[1] += 0.5 #bonus for running on non-running day
+								compliance[0] += 0.5 #bonus for running on running day
 							end	
-							compliance[1] += workout.duration/training_plan[date][0].duration
+							converted = workout.convert_to_run
+							compliance[0] += (converted[:distance]/training_plan[date][0].distance) + (converted[:duration]/training_plan[date][0].duration)
 							end
+						end
+					else #check cross-train day
+						if actual_workouts[date]
+							actual_workouts[date].each do |workout|
+								if (workout.activity == 'Run') 
+									compliance[1] += 0.5 #bonus for running on non-running day
+								end	
+								compliance[1] += workout.duration/training_plan[date][0].duration
+								end
 
+						end
+					end	
+				elsif (actual_workouts[date]) #checks for unplanned workouts
+					actual_workouts[date].each do |workout|
+						converted = workout.convert_to_run
+						compliance[2] +=  converted[:distance]
 					end
-				end	
-			elsif (actual_workouts[date]) #checks for unplanned workouts
-				actual_workouts[date].each do |workout|
-					converted = workout.convert_to_run
-					compliance[2] +=  converted[:distance]
 				end
 			end
+			score = (((compliance[0]/(2.5*run_days))*0.9 + (compliance[1]/xtrain_days)*0.25)*100 + (compliance[2]/5)).round(2)
+		else
+			score = 100
 		end
-		score = (((compliance[0]/(2.5*run_days))*0.75 + (compliance[1]/xtrain_days)*0.25)*100 + (compliance[2]/5)).round(2)
+		score
 	end
 end
