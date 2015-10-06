@@ -1,7 +1,7 @@
 class Workout < ActiveRecord::Base
 	validates_presence_of :duration, :distance, :activity
 	belongs_to :plan
-	belongs_to :user
+	has_one :user, through: :plan
 
 	def date_only
 		date.to_date

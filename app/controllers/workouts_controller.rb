@@ -2,9 +2,10 @@ class WorkoutsController < ApplicationController
 	def new
 		workout_date = Date.parse(params[:date])
 		@plan = Plan.find_by(id: params[:plan_id])
+		@user = current_user
 		@planned_workout = @plan.workouts.where("(planned = ?) AND (date = ?) ", true, workout_date)
 		@workout = Workout.new(date: workout_date, duration: 0)
-		@user = current_user
+		
 	end
 
 	def create
@@ -45,7 +46,7 @@ class WorkoutsController < ApplicationController
 		else
 			flash[:alert] = @workout.errors.messages
 	      	flash[:color]= "invalid"
-			render :new
+			render :edit
 		end
 	end
 

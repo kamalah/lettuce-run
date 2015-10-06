@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post 'plans/:id/active' => 'plans#make_active', as: :active_plan
   
   resources :plans, only: [:new, :create, :show]
+  
   resources :users,{only: 'show'} do
        resources :plans do
         resources :workouts
