@@ -33,9 +33,11 @@
                     <li>
                         <%= link_to "Home", "/" %>
                     </li>
+                    <% if (user_signed_in?) %>
                     <li>
-                        <a href="#services">Services</a>
+                        <%= link_to "All Plans", user_path(current_user.id) %>
                     </li>
+                    <% end %>
                     <li>
                         <a href="#contact">Contact</a>
                     </li>

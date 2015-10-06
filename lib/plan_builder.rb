@@ -90,7 +90,7 @@ private
 				if (date.wday == 2 || date.wday == 4)
 						plan.workouts.create(date: date, distance: plan.distance*distance_scale[training_index][0], duration: plan.distance*distance_scale[training_index][0]*target_pace*pace_scale[training_index][0])
 				elsif (date.wday == 5)
-						plan.workouts.create(activity: "cross-train", date: date, duration: 45)
+						plan.workouts.create(activity: "cross-train", date: date, duration: 45, distance: 0)
 				elsif (date.wday == 0)
 						plan.workouts.create(date: date, distance: (plan.distance*distance_scale[training_index][1]), duration: (plan.distance*distance_scale[training_index][1])*target_pace*pace_scale[training_index][1])
 				end

@@ -37,16 +37,23 @@ $('#submit').on('click', function(){
 			}
 });
 
-$('#show-hide').click(function (){
-		$(".plan-summary").toggle();
-		if ($(".plan-summary").is(":hidden")) {
-			$('#show-hide').text("Show All Versions Plan");
+$('#show-hide-versions').click(function (){
+		$(".plan-versions").toggle();
+		if ($(".plan-versions").is(":hidden")) {
+			$('#show-hide-versions').text("Show All Versions Plan");
 		} else {
-			$('#show-hide').text("Hide All Versions Plan");
+			$('#show-hide-versions').text("Hide All Versions Plan");
 		}
 });
 
-
+$('#show-hide-summary').click(function (){
+		$(".plan-summary").toggle();
+		if ($(".plan-summary").is(":hidden")) {
+			$('#show-hide-summary').text("Show Plan Details");
+		} else {
+			$('#show-hide-summary').text("Hide Plan Details");
+		}
+});
 (function () {
     $('#plan-form').change(function() {
         var empty = false;
