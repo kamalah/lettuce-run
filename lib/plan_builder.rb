@@ -37,6 +37,7 @@ private
 					when '2'
 						fullPlan(plan)
 				end
+				session[:plan_id] = plan.id
 				redirect_to plan_path(plan)
 	        else
 	      		flash[:alert] = plan.errors.messages

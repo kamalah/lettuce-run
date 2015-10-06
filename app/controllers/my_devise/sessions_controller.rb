@@ -1,8 +1,8 @@
 class MyDevise::SessionsController < Devise::SessionsController 
-  def new
-    super
-    session[:plan_id] = params[:plan_id]
-  end
+  # def new
+  #   super
+  #   session[:plan_id] = params[:plan_id]
+  # end
   
   def create
     super

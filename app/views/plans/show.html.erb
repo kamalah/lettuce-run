@@ -31,9 +31,9 @@
 <% else %>
 <div class="alert alert-warning" role="alert">You need to sign in order to save your plan.</div>
 
-  <p><%= link_to "Sign In", new_user_session_path({plan_id: @plan.id}) %> 
+  <p><%= link_to "Sign In", new_user_session_path%> 
    </p>
-   <p>New User?  <%=link_to "Sign Up", new_user_registration_path({plan_id: @plan.id})%> </p>
+   <p>New User?  <%=link_to "Sign Up", new_user_registration_path%> </p>
   <% end %>
 
   <h3> Score: <%=@plan.analyze %> </h3>
