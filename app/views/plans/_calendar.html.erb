@@ -31,7 +31,7 @@
       <% if (user_signed_in?) %>
       <%= link_to(cal_date.day,new_user_plan_workout_path({plan_id: params[:id], date: cal_date, user_id: current_user.id})) %>
       <% else %>
-       cal_date.day
+       <%=cal_date.day %>
       <% end %>
       <% end %>
       <% if workouts[cal_date] %>

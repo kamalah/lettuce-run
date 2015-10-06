@@ -6,9 +6,9 @@ class MyDevise::SessionsController < Devise::SessionsController
   
   def create
     super
-    if session[:plan_id]
-      plan = Plan.find_by(session[:plan_id])
-      plan.user_id = current_user.user_id
+    if (session[:plan_id] && current_user)
+      plan = Plan.find_by(id: session[:plan_id])
+      plan.user_id = current_user.id
       plan.save
     end
   end
