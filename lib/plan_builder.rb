@@ -1,19 +1,19 @@
 module PlanBuilder
 private 
   		def build_plan
-			#distance_map ={'0': 6.2, '1': 13.1, '2': 26.2}
-			# distance = distance_map[params[:distance].to_sym]
+			distance_map ={:'0'=> 6.2, :'1'=> 13.1, :'2'=> 26.2}
+			distance = distance_map[params[:distance].to_sym]
 			race_date = params[:race_date]
 			start_date = params[:start_date]
 			status = params[:status]
-			case params[:distance]
-				when "0"
-					distance = 6.2
-				when "1"
-					distance = 13.1
-				when "2"
-					distance = 26.2	
-			end
+			# case params[:distance]
+			# 	when "0"
+			# 		distance = 6.2
+			# 	when "1"
+			# 		distance = 13.1
+			# 	when "2"
+			# 		distance = 26.2	
+			# end
 			
 
 			target_time = params[:hours].to_i*60 + params[:minutes].to_i
