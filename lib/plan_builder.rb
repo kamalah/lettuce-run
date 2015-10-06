@@ -128,7 +128,7 @@ private
 				if (date.wday == 2 || date.wday == 4)
 						plan.workouts.create(date: date, distance: long_run[training_index]*distance_scale[training_index][0], duration: long_run[training_index]*distance_scale[training_index][0]*target_pace*pace_scale[training_index][0])
 				elsif (date.wday == 5)
-						plan.workouts.create(activity: "cross-train", date: date, duration: 45)
+						plan.workouts.create(activity: "cross-train", date: date, duration: 45, distance: 0)
 				elsif (date.wday == 0)
 						plan.workouts.create(date: date, distance: (long_run[training_index]*distance_scale[training_index][1]), duration: (long_run[training_index]*distance_scale[training_index][1])*target_pace*pace_scale[training_index][1])
 				end
@@ -165,7 +165,7 @@ private
 				if (date.wday == 2 || date.wday == 4)
 						plan.workouts.create(date: date, distance: long_run[training_index]*distance_scale[training_index][0], duration: long_run[training_index]*distance_scale[training_index][0]*target_pace*pace_scale[training_index][0])
 				elsif (date.wday == 5)
-						plan.workouts.create(activity: "cross-train", date: date, duration: 45)
+						plan.workouts.create(activity: "cross-train", date: date, duration: 45, distance: 0)
 				elsif (date.wday == 0)
 						plan.workouts.create(date: date, distance: (long_run[training_index]*distance_scale[training_index][1]), duration: (long_run[training_index]*distance_scale[training_index][1])*target_pace*pace_scale[training_index][1])
 				end
