@@ -2,6 +2,7 @@ function find_value(value_name, form_values){
 	var val_index = form_values.findIndex(function (el){
 		return value_name == el.name
 	});
+
 	return form_values[val_index].value
 
 }

@@ -1,9 +1,4 @@
 class MyDevise::SessionsController < Devise::SessionsController 
-  # def new
-  #   super
-  #   session[:plan_id] = params[:plan_id]
-  # end
-  
   def create
     super
     if (session[:plan_id] && current_user)
@@ -12,5 +7,12 @@ class MyDevise::SessionsController < Devise::SessionsController
       plan.save
       session[:plan_id] = nil
     end
+  end
+  protected
+  def after_sign_in_path_for(resource_or_scope)
+   if session[:plan_id]
+    "/plans/#{session[:plan_id]}"
+    
+  end
   end
 end

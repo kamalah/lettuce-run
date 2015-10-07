@@ -11,6 +11,19 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
        plan.user_id = current_user.id
        plan.save
        session[:plan_id] = nil
-     end
+    end
   end
+
+   protected
+    def after_sign_up_path_for(resource)
+      if session[:plan_id]
+        "/plans/#{session[:plan_id]}"
+      end    
+  end
+
+    def after_inactive_sign_up_path_for(resource)
+      if session[:plan_id]
+        "/plans/#{session[:plan_id]}"
+      end
+    end
 end

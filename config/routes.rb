@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users,
               :controllers =>  {:registrations => "my_devise/registrations", 
-                :sessions => "my_devise/sessions"}, path: "accounts"
+                :sessions => "my_devise/sessions", passwords: 'my_devise/passwords'}, path: "accounts"
 
   root 'plans#index'
   post '/users/:user_id/plans/:id/active' => 'plans#make_active', as: :active_plan

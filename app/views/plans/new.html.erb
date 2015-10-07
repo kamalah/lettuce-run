@@ -13,7 +13,7 @@
 	<%= form_tag("/plans", method: "post", id: "plan-form") do%>
 		<div class="form-group">
 			<label for="running-status">1. How Much do You Run?</label><br>
-			<label class="radio-inline"><input type="radio" name="status" value="0">None</label>
+			<label class="radio-inline"><input type="radio" name="status" value="0" checked>None</label>
 			<label class="radio-inline"><input type="radio" name="status" value="1">< 10 miles/week</label>
 			<label class="radio-inline"><input type="radio" name="status" value="2">10-20 miles/week</label>
 			<label class="radio-inline"><input type="radio" name="status" value="3"> >20 miles/week</label>
@@ -28,7 +28,7 @@
 		</div>
 		<div class="form-group">
 			<label for="race-distance">4. How Long is Your Race?</label> <br>
-			<label class="radio-inline"><input type="radio" name="distance"= value="0">10k</label>
+			<label class="radio-inline"><input type="radio" name="distance"= value="0" checked>10k</label>
 			<label class="radio-inline"><input type="radio" name="distance" value="1"> Half Marathon</label>
 			<label class="radio-inline"><input type="radio" name="distance" value="2">Full Marathon</label>
 		</div>

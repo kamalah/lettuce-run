@@ -31,7 +31,8 @@ private
 				if (!user_signed_in?)
 					session[:plan_id] = plan.id
 					flash[:alert] = "You need to sign in order to save your plan."
-				end
+					params[:redirect_to] = "/plans/#{plan.id}"
+  				end
 				redirect_to plan_path(plan)
 	        else
 	      		flash[:alert] = plan.errors.messages
