@@ -4,6 +4,11 @@ class Plan < ActiveRecord::Base
 	has_many :workouts
 	belongs_to :user
 	
+	def owns_plan?(current_user)
+		current_user && (current_user.id == user.id) 
+	end
+
+
 	def race_date_after_start_date
 		 if race_date <= start_date
 	      errors.add(:start_date, "must be before race date")

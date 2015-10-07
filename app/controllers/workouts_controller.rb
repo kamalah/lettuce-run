@@ -1,4 +1,6 @@
 class WorkoutsController < ApplicationController
+	before_action :authenticate_user!
+	
 	def new
 		workout_date = Date.parse(params[:date])
 		@plan = Plan.find_by(id: params[:plan_id])

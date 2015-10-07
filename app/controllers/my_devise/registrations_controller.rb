@@ -10,6 +10,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
        plan = Plan.find_by(id: session[:plan_id])
        plan.user_id = current_user.id
        plan.save
+       session[:plan_id] = nil
      end
   end
 end

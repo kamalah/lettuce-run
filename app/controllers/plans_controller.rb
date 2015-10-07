@@ -8,6 +8,16 @@ class PlansController < ApplicationController
     build_plan
   end
   
+  def destroy
+    flash[:alert] = "Plans cannot be deleted at this time."
+    redirect_to user_path(current_user.id)
+  end
+  
+  def edit
+    @user = current_user
+    @plan = Plan.find_by(id: params[:id])
+  end
+
   def make_active
     plan = Plan.find_by(id: params[:id])
     last_active_plan = Plan.where("(master = ?) AND (active = ?)", plan.master, true).first
@@ -15,6 +25,19 @@ class PlansController < ApplicationController
     last_active_plan.update(active: false)
     last_active_plan.workouts.where(planned: false).update_all(plan_id: plan.id)
     redirect_to plan_path(plan)
+  end
+
+  def modify
+    name = params[:plan][:name]
+    plan = Plan.find_by(id: params[:id])
+    all_plans = Plan.where(master: plan.master)
+    
+    if all_plans.update_all(name: name)
+      flash[:notice] = "Your name was changed successfully."
+    else
+      flash[:alert] = "Please try again later"
+    end
+    redirect_to user_path(current_user.id)
   end
 
   def new

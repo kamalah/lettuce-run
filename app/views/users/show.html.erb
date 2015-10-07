@@ -1,5 +1,8 @@
 <div class="container">
+<h1> Active Plans </h1>
+<ul class="list-group">
 	<% @plans.each do |plan| %>
-	<li> <%= link_to plan.id, user_plan_path({id: plan.id, user_id: current_user.id}) %> </li>
+	<li class="list-group-item"> <%= link_to (plan.name || plan.id), user_plan_path({id: plan.id, user_id: current_user.id}) %> | <%= link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_user_plan_path({id: plan.id, user_id: current_user.id})%>| <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, user_plan_path({id: plan.id, user_id: current_user.id}), method: :delete%> </li>
 	<% end %>
+	</ul>
 </div>

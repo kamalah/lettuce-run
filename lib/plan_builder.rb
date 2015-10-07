@@ -6,15 +6,6 @@ private
 			race_date = params[:race_date]
 			start_date = params[:start_date]
 			status = params[:status]
-			# case params[:distance]
-			# 	when "0"
-			# 		distance = 6.2
-			# 	when "1"
-			# 		distance = 13.1
-			# 	when "2"
-			# 		distance = 26.2	
-			# end
-			
 
 			target_time = params[:hours].to_i*60 + params[:minutes].to_i
 			activities = ['Run',params[:activity1],params[:activity2],params[:activity3]].reject(&:blank?).join(',')
@@ -37,7 +28,10 @@ private
 					when '2'
 						fullPlan(plan)
 				end
-				session[:plan_id] = plan.id
+				if (!user_signed_in?)
+					session[:plan_id] = plan.id
+					flash[:alert] = "You need to sign in order to save your plan."
+				end
 				redirect_to plan_path(plan)
 	        else
 	      		flash[:alert] = plan.errors.messages

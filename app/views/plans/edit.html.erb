@@ -1,0 +1,9 @@
+<div class="container">
+<div class="alert alert-warning" role="alert"> Any changes will apply to all versions.</div>
+<%= form_for [@user, @plan], url: modify_plan_path ,class: 'form-inline' do |f| %>
+	<%= f.label :name %>
+	<%= f.text_field :name, class: 'form-control' %>
+
+	<%= f.submit "Save", class: "btn btn-primary" %>
+<% end %>
+</div>

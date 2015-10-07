@@ -4,8 +4,8 @@ Rails.application.routes.draw do
                 :sessions => "my_devise/sessions"}, path: "accounts"
 
   root 'plans#index'
-  post 'plans/:id/active' => 'plans#make_active', as: :active_plan
-  
+  post '/users/:user_id/plans/:id/active' => 'plans#make_active', as: :active_plan
+  patch '/users/:user_id/plans/:id/modify' => 'plans#modify', as: :modify_plan
   resources :plans, only: [:new, :create, :show]
   
   resources :users,{only: 'show'} do
@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         resources :workouts
       end           
   end
-
+end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -68,4 +68,4 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-end
+
