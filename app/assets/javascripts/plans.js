@@ -55,6 +55,24 @@ $('#show-hide-summary').click(function (){
 			$('#show-hide-summary').text("Hide Plan Details");
 		}
 });
+
+$('#download-ics').click(function() {
+var planId = $('#download-ics').data('plan')
+var request = $.get('/api/plans/' + planId)
+    request.fail(function () {
+     	alert('Error Downloading.')
+      
+     })
+    request.done(function (workouts) {
+       var cal = ics();
+       workouts.forEach(function (workout){
+      cal.addEvent('Lettuce Run Workout', `${workout.activity} - ${workout.distance} miles, - ${workout.duration} minutes`, '', workout.date, workout.date);
+     })
+       cal.download('Lettuce_Plan')
+    })
+
+});
+
 (function () {
     $('#plan-form').change(function() {
         var empty = false;

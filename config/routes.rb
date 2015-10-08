@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   post '/users/:user_id/plans/:id/active' => 'plans#make_active', as: :active_plan
   patch '/users/:user_id/plans/:id/modify' => 'plans#modify', as: :modify_plan
   resources :plans, only: [:new, :create, :show]
-  
+  namespace :api do
+    resources :plans, only: :show
+  end
+
   resources :users,{only: 'show'} do
        resources :plans do
         resources :workouts

@@ -51,10 +51,10 @@ private
 				current_plan.workouts.where("(planned = ?) AND (date > ?)",true, Date.today).each do |wo|
 					new_workout = new_plan.workouts.create(date: wo.date, activity: wo.activity)
 					if (new_workout.activity == 'Run')
-						new_workout.duration = ((wo.duration/(score/100.0))*0.90).round(0)
-						new_workout.distance = (wo.distance*(score/100.0)*1.05).round(1)
+						new_workout.duration = ((wo.duration/(score/100.0))*0.85).round(0)
+						new_workout.distance = (wo.distance*(score/100.0)*1.1).round(1)
 					elsif (new_workout.activity == 'Race')
-						new_workout.duration = ((wo.duration/(score/100.0))*0.90).round(0)
+						new_workout.duration = ((wo.duration/(score/100.0))*0.85).round(0)
 						new_workout.distance = wo.distance
 						new_plan.update(target_time: new_workout.duration)
 					else #cross-train

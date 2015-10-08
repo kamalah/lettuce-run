@@ -1,5 +1,7 @@
 <div class="container">
+<%= button_to "Make A New Plan!", new_user_plan_path(user_id: current_user.id), method: :get, class: "btn btn-default btn-lg" %>
 <h1> Active Plans </h1>
+
 <ul class="list-group">
 	<% @plans.each do |plan| %>
 	<li class="list-group-item"> <%= link_to (plan.name || "Training Plan #{plan.master}"), user_plan_path({id: plan.id, user_id: current_user.id}) %> | <%= link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_user_plan_path({id: plan.id, user_id: current_user.id})%>| <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, user_plan_path({id: plan.id, user_id: current_user.id}), method: :delete%> </li>
