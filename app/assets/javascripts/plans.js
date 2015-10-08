@@ -65,7 +65,7 @@ var request = $.get('/api/plans/' + planId)
     request.done(function (workouts) {
        var cal = ics();
        workouts.forEach(function (workout){
-      cal.addEvent('Lettuce Run Workout', `${workout.activity} - ${workout.distance} miles, - ${workout.duration_pretty.join(':')} (hh:mm:ss)`, '', workout.date, workout.date);
+      cal.addEvent('Lettuce Run Workout', workout.activity + '-' + workout.distance + 'miles, - ' + workout.duration_pretty.join(':')+ '(hh:mm:ss)', '', workout.date, workout.date);
      })
        cal.download('Lettuce_Plan')
     });
