@@ -3,6 +3,10 @@ class Workout < ActiveRecord::Base
 	belongs_to :plan
 	has_one :user, through: :plan
 
+	def as_json(options={})
+		super(methods: :duration_pretty)
+	end
+
 	def date_only
 		date.to_date
 	end

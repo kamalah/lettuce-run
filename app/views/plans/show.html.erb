@@ -27,15 +27,20 @@
     </div>
     </div>
   <% if (@plan.owns_plan?(current_user)) %>
-  <div class="row">
     <%if (@plan.active) %>
+     
+        <div class="row">
+        <div class="col-md-2">
       <%= button_to "Update Plan!", user_plan_path({id: @plan.id, user_id: current_user.id}), method: :patch, class: "btn btn-primary"%>
-      <button  id="download-ics" class="btn btn-defualt" data-plan="<%= @plan.id %>"> Download Plan!</button>
+    </div>
+    <div class="col-md-1">
+    <button id="download-ics" class="btn btn-info" data-plan="<%= @plan.id %>"> Download Plan!</button>
+     </div>
+     </div>
     <% else %>
       <%= button_to "Make Active!", active_plan_path({id: @plan.id, user_id: current_user.id}), class: "btn btn-primary" %>
     <% end %>
-  </div>
-  <% end %>
+   <% end %>
   <h3> Score: <%=@plan.analyze %> </h3>
  
   <div class="row">
