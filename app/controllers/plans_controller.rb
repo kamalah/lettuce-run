@@ -57,11 +57,13 @@ class PlansController < ApplicationController
     compliance = current_plan.analyze
   	if compliance > 90 
   		flash[:notice] = "Your are following your current plan well, no need to update."
-  	else
+  	elsif compliance > 50
   		flash[:notice] = "Here is your new plan!"
-      update_plan(current_plan)
+      update_plan(current_plan, compliance)
+    else 
+      flash[:alert] = "You should probably defer until next year."
     end
-    redirect_to plan_path(current_plan)
+    # redirect_to plan_path(current_plan)
   end
 
 end

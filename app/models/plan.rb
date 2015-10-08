@@ -25,6 +25,12 @@ class Plan < ActiveRecord::Base
 	 #   	end
 	end
 
+	def target_time_pretty
+		hours = (target_time/60).floor
+		minutes = (target_time - hours*60).floor
+		seconds = ((target_time - hours*60)-minutes).round(2)
+		[hours,minutes, seconds]
+	end
 	def target_time_reasonable
 		if ((target_time / distance) < 5)
 			errors.add(:target_time, "your target time is not reasonable")
@@ -88,6 +94,7 @@ class Plan < ActiveRecord::Base
 		else
 			score = 100
 		end
-		score
+		#score
+		75
 	end
 end

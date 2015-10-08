@@ -9,10 +9,9 @@ class MyDevise::SessionsController < Devise::SessionsController
     end
   end
   protected
-  def after_sign_in_path_for(resource_or_scope)
-   if session[:plan_id]
-    "/plans/#{session[:plan_id]}"
-    
-  end
-  end
+    def after_sign_in_path_for(resource_or_scope)
+      if session[:plan_id]
+        "/plans/#{session[:plan_id]}"
+      end
+    end
 end

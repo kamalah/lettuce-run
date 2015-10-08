@@ -41,21 +41,37 @@ private
 	    	end
 		end
 
-		def update_plan(current_plan)
+		def update_plan(current_plan, score)
 			new_plan = current_plan.dup
 			new_plan.version = Plan.where(master: current_plan.master).order("version DESC").first.version + 1
 			new_plan.start_date = Date.today
 			current_plan.update(active: false)
 			if new_plan.save
 				current_plan.workouts.where(planned: false).update_all(plan_id: new_plan.id)
-				case new_plan.distance
-					when 6.2
-						tenkPlan(new_plan)
-					when 13.1
-						halfPlan(new_plan)
-					when 26.2
-						fullPlan(new_plan)
+				current_plan.workouts.where("(planned = ?) AND (date > ?)",true, Date.today).each do |wo|
+					new_workout = new_plan.workouts.create(date: wo.date, activity: wo.activity)
+					if (new_workout.activity == 'Run')
+						new_workout.duration = ((wo.duration/(score/100.0))*0.90).round(0)
+						new_workout.distance = (wo.distance*(score/100.0)*1.05).round(1)
+					elsif (new_workout.activity == 'Race')
+						new_workout.duration = ((wo.duration/(score/100.0))*0.90).round(0)
+						new_workout.distance = wo.distance
+						new_plan.update(target_time: new_workout.duration)
+					else #cross-train
+						new_workout.duration = wo.duration 
+						new_workout.distance = 0
+					end
+					new_workout.save
 				end
+
+				# case new_plan.distance
+				# 	when 6.2
+				# 		tenkPlan(new_plan)
+				# 	when 13.1
+				# 		halfPlan(new_plan)
+				# 	when 26.2
+				# 		fullPlan(new_plan)
+				# end
 				redirect_to plan_path(new_plan)
 			else
 				flash[:alert] = plan.errors.messages
@@ -77,8 +93,8 @@ private
 			taper_week = plan.race_date - 6
 			training_dates = (plan.start_date..taper_week).to_a
 			#race_date "workout"
-			plan.workouts.create(date: plan.race_date, distance: (plan.distance), duration: plan.target_time)
-			distance_scale = [[0.5, 0.75], [0.75, 1] ,[0.75, 1.1]]
+			plan.workouts.create(date: plan.race_date, distance: (plan.distance), duration: plan.target_time, activity: 'Race')
+			distance_scale = [[0.5, 0.75], [0.75, 1] ,[0.75, 1.05]]
 			pace_scale = [[1.2, 1.25], [1.1, 1.15], [1, 1.05]]
 
 			training_dates.each do |date|
@@ -107,12 +123,12 @@ private
 			taper_week = plan.race_date - 6
 			training_dates = (plan.start_date..taper_week).to_a
 			#race_date "workout"
-			plan.workouts.create(date: plan.race_date, distance: (plan.distance), duration: plan.target_time)
+			plan.workouts.create(date: plan.race_date, distance: (plan.distance), duration: plan.target_time, activity: 'Race')
 			long_run = [7, 10, 12, 10]
 			distance_scale = [[0.5, 0.75],
 								[0.75, 1],
-								[0.75, 1.1],
-							[0.75, 1.1]]
+								[0.75, 1.05],
+							[0.80, 1.05]]
 			pace_scale =	[[1.2, 1.25],
 							[1.1, 1.15],
 							[1, 1.05],
@@ -144,7 +160,7 @@ private
 			taper_week = plan.race_date - 6
 			training_dates = (plan.start_date..taper_week).to_a
 			#race_date "workout"
-			plan.workouts.create(date: plan.race_date, distance: (plan.distance), duration: plan.target_time)
+			plan.workouts.create(date: plan.race_date, distance: (plan.distance), duration: plan.target_time, activity: 'Race')
 			long_run = [10, 18, 24, 16]
 			distance_scale = [[0.5, 0.75],
 								[0.75, 1],

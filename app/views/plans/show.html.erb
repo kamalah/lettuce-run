@@ -1,12 +1,18 @@
 <div class="container">
-  <h1> <%= @plan.name || "Training Plan #{@plan.id}" %></h1>
+ <% if !(@plan.active) %>
+ <div class="alert alert-warning" role="alert"> This Plan is: Inactive</div>
+ <% else %>
+ <div class="alert alert-success" role="alert"> This Plan is: Active</div>
+ <%end %>
+
+  <h1> <%= @plan.name || "Training Plan #{@plan.master}" %> - v.<%=@plan.version%> </h1>
   <div class="row">
   <div class="col-md-3">
        <a href="javascript:void(0)" id="show-hide-summary"> Hide Plan Details</a>
           <div class="plan-summary">
            <p> Race Date: <%=@plan.race_date.strftime("%e-%b-%Y") %> </p>
            <p> Race Distance (miles): <%= @plan.distance %> </p>
-           <p> Target Time (mins): <%=@plan.target_time %> </p>  
+           <p> Target Time (hh:mm:ss): <%=@plan.target_time_pretty.join(':') %> </p>  
            </div>
     </div>
         <div class="col-md-3">
@@ -25,7 +31,7 @@
     <%if (@plan.active) %>
       <%= button_to "Update Plan!", user_plan_path({id: @plan.id, user_id: current_user.id}), method: :patch, class: "btn btn-primary"%>
     <% else %>
-      <%= button_to "Make Active!", active_plan_path(@plan), class: "btn btn-primary" %>
+      <%= button_to "Make Active!", active_plan_path({id: @plan.id, user_id: current_user.id}), class: "btn btn-primary" %>
     <% end %>
   </div>
   <% end %>
