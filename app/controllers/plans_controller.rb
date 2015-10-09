@@ -21,9 +21,11 @@ class PlansController < ApplicationController
       @calendar.add_event(event)
     end
       @calendar.publish
-      headers['Content-Type'] = "text/calendar; charset=UTF-8"
+      #headers['Content-Type'] = "text/calendar; charset=UTF-8"
+      #render layout: false
       #render plain: @calendar.to_ical
-      render plain: @calendar.to_ical, :layout => false
+      #render text: "help"
+      render text: @calendar.to_ical, :layout => false 
   end
 
   def destroy
