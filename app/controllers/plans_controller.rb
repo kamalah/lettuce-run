@@ -15,8 +15,8 @@ class PlansController < ApplicationController
     @workouts.each do |workout|
       event = Icalendar::Event.new
       event.dtstart = workout.date.strftime("%Y%m%dT%H%M%S")
-      event.summary = "#{workout.activity} - #{workout.distance} miles - #{workout.duration_pretty.join(':')} (hh:mm:ss)" 
-      event.description = "Lettuce Run Plan: " + (@plan.name || "Training Plan #{@plan.master}")
+      event.description = "#{workout.activity} - #{workout.distance} miles - #{workout.duration_pretty.join(':')} (hh:mm:ss)" 
+      event.summary = "Lettuce Run Plan: " + (@plan.name || "Training Plan #{@plan.master}")
       event.location = " "
       @calendar.add_event(event)
     end
