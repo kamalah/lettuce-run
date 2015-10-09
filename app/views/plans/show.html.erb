@@ -33,8 +33,11 @@
         <div class="col-md-2">
       <%= button_to "Update Plan!", user_plan_path({id: @plan.id, user_id: current_user.id}), method: :patch, class: "btn btn-primary"%>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
     <button id="download-ics" class="btn btn-info" data-plan="<%= @plan.id %>"> Download Plan!</button>
+     </div>
+     <div class="col-md-2">
+      <%= button_to "Plan Link (for GoogleCalendar)", export_plan_path({id: @plan.id, user_id: current_user.id}), method: :get, class: "btn btn-primary"%>
      </div>
      </div>
     <% else %>

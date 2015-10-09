@@ -8,6 +8,24 @@ class PlansController < ApplicationController
     build_plan
   end
   
+  def export_plan
+     @plan = Plan.find_by(id: params[:id])
+    @workouts = @plan.workouts.where(planned: true)
+    @calendar = Icalendar::Calendar.new
+    @workouts.each do |workout|
+      event = Icalendar::Event.new
+      event.dtstart = workout.date.strftime("%Y%m%dT%H%M%S")
+      event.summary = "#{workout.activity} - #{workout.distance} miles - #{workout.duration_pretty.join(':')} (hh:mm:ss)" 
+      event.description = "Lettuce Run Plan: " + (@plan.name || "Training Plan #{@plan.master}")
+      event.location = " "
+      @calendar.add_event(event)
+    end
+      @calendar.publish
+      headers['Content-Type'] = "text/calendar; charset=UTF-8"
+      #render plain: @calendar.to_ical
+      render plain: @calendar.to_ical, :layout => false
+  end
+
   def destroy
     flash[:alert] = "Plans cannot be deleted at this time."
     redirect_to user_path(current_user.id)

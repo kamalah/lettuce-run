@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root 'plans#index'
   post '/users/:user_id/plans/:id/active' => 'plans#make_active', as: :active_plan
   patch '/users/:user_id/plans/:id/modify' => 'plans#modify', as: :modify_plan
+  get '/users/:user_id/plans/:id/export' => 'plans#export_plan', as: :export_plan
   resources :plans, only: [:new, :create, :show]
   namespace :api do
     resources :plans, only: :show
