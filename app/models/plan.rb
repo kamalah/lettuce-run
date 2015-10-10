@@ -94,7 +94,6 @@ class Plan < ActiveRecord::Base
 		else
 			score = 100
 		end
-		#score
-		75
+		score
 	end
 end
